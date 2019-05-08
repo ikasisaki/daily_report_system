@@ -25,6 +25,14 @@ import javax.persistence.Table;
             name = "getReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r"
             ),
+    @NamedQuery(
+            name = "getMyAllReports",
+            query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
+            ),
+    @NamedQuery(
+            name = "getMyReportsCount",
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
+            )
 })
 @Entity
 public class Report {
@@ -36,6 +44,28 @@ public class Report {
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    @Column(name = "classifier")
+    private int classifier;
+
+    @Column(name = "sort_id")
+    private String sort_id;
+
+    public String getSort_id() {
+        return sort_id;
+    }
+
+    public void setSort_id(String sort_id) {
+        this.sort_id = sort_id;
+    }
+
+    public int getClassifier() {
+        return classifier;
+    }
+
+    public void setClassifier(int classifier) {
+        this.classifier = classifier;
+    }
 
     @Column(name = "report_date", nullable = false)
     private Date report_date;

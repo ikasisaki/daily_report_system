@@ -23,11 +23,21 @@
                                 <pre><c:out value="${report.content}" /></pre>
                             </td>
                         </tr>
+                        <c:if test="${sessionScope.login_employee.admin_flag == 1}">
+                         <tr>
+                            <th>分類欄</th>
+                            <td>
+                               <c:out value="${report.sort_id}" />
+
+                           </td>
+                        </tr>
+                        <tr>
+                        </c:if>
                         <tr>
                             <th>登録日時</th>
                             <td>
                                 <fmt:formatDate value="${report.created_at}" pattern="yyyy-MM-dd HH:mm:ss" />
-                            </td>
+                           </td>
                         </tr>
                         <tr>
                             <th>更新日時</th>
@@ -38,9 +48,16 @@
                     </tbody>
                 </table>
 
-                <c:if test="${sessionScope.login_employee.id == report.employee.id}">
+                <c:choose>
+
+                <c:when test ="${sessionScope.login_employee.id == report.employee.id}">
                     <p><a href="<c:url value='/reports/edit?id=${report.id}' />">この日報を編集する</a></p>
-                </c:if>
+                </c:when>
+
+                <c:when  test="${sessionScope.login_employee.admin_flag == 1 && sessionScope.login_employee.id != report.employee.id}">
+                     <p><a href="<c:url value='/reports/edit?id=${report.id}' />">この日報を分類する</a></p>
+                </c:when>
+                </c:choose>
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>
