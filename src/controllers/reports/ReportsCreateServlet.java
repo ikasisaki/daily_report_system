@@ -54,8 +54,7 @@ public class ReportsCreateServlet extends HttpServlet {
 
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
-            String joined = String.join(",",request.getParameterValues("sort_id"));
-            r.setSort_id(joined);
+
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
